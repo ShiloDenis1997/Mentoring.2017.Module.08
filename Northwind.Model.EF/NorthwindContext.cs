@@ -13,6 +13,7 @@ namespace Northwind.Model.EF
         }
 
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<CreditCard> CreditCards { get; set; }
         public virtual DbSet<CustomerDemographic> CustomerDemographics { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
@@ -59,6 +60,11 @@ namespace Northwind.Model.EF
                 .HasMany(e => e.Employees1)
                 .WithOptional(e => e.Employee1)
                 .HasForeignKey(e => e.ReportsTo);
+
+            modelBuilder.Entity<Employee>()
+                .HasMany(e => e.CreditCards)
+                .WithRequired(c => c.Employee)
+                .HasForeignKey(c => c.EmployeeID);
 
             modelBuilder.Entity<Employee>()
                 .HasMany(e => e.Territories)
